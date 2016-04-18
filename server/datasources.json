@@ -1,0 +1,17 @@
+{
+  "infoLite": {
+    "name": "infoLite",
+    "connector": "sqlite",
+    "file_name": "./info.db"
+  },
+  "forecast": {
+    "url": "http://api.openweathermap.org/data/2.5",
+    "name": "forecast",
+    "connector": "remote"
+  },
+  "testbed": {
+    "url": "http://testbed.fmi.fi/data/area/radar/temperature/TB_%datetime%.png",
+    "name": "testbed",
+    "connector": "remote"
+  }
+}

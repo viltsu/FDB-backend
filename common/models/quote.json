@@ -1,0 +1,24 @@
+{
+  "name": "Quote",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "quote": {
+      "type": "string",
+      "required": true
+    },
+    "by": {
+      "type": "string"
+    },
+    "img": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

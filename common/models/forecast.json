@@ -1,0 +1,23 @@
+{
+  "name": "Forecast",
+  "base": "Model",
+  "idInjection": false,
+  "resourceName": "forecast",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "time": {
+      "type": "string",
+      "required": true
+    },
+    "forecast": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
