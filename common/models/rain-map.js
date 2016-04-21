@@ -29,10 +29,10 @@ module.exports = function(RainMap) {
     var url = MAP_URL.replace('%datatime%',utc.format('YYYYMMDDHHmm'));
 
     try{
-      var model = cache.get(url + '3434', true );
-      parameters.data.push(url, model);
+      var model = cache.get(url, true );
+      parameters.data.push(model);
       parameters.success++;
-      fetchImage(cb, parameters)
+      RainMap.fetchImages(cb, parameters)
     } catch( err ){
       request(url, function(error, res, body) {
         if (!error && res.statusCode === 200) {
@@ -40,7 +40,7 @@ module.exports = function(RainMap) {
             image: url,
             time: parameters.time.format('HH:mm')
           };
-          parameters.data.push(url, model);
+          parameters.data.push(model);
           parameters.success++;
           cache.set(url, model);
         } else {
