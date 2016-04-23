@@ -5,9 +5,29 @@
     "file_name": "./info.db"
   },
   "forecast": {
-    "url": "http://api.openweathermap.org/data/2.5",
     "name": "forecast",
-    "connector": "remote"
+    "connector": "rest",
+    "operations": [{
+      "template": {
+        "method": "GET",
+        "url": "http://api.openweathermap.org/data/2.5/forecast",
+        "headers": {
+          "accepts": "application/json",
+          "content-type": "application/json"
+        },
+        "query": {
+          "lon": "{lon}",
+          "lat": "{lat}",
+          "APPID": "{token}",
+          "format": "{format=json}",
+          "units": "{units=metric}"
+        },
+        "responsePath": "$.list[*]"
+      },
+      "functions": {
+        "find": ["lat", "lon", "token"]
+      }
+    }]
   },
   "testbed": {
     "url": "http://testbed.fmi.fi/data/area/radar/temperature/TB_%datetime%.png",
