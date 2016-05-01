@@ -2,10 +2,10 @@
   "name": "Forecast",
   "base": "Model",
   "idInjection": false,
-  "resourceName": "forecast",
   "options": {
     "validateUpsert": true
   },
+  "resourceName": "forecast",
   "properties": {
     "time": {
       "type": "string",

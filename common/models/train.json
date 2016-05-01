@@ -1,0 +1,36 @@
+{
+  "name": "Train",
+  "plural": "trains",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "line": {
+      "type": "string",
+      "required": true
+    },
+    "destination": {
+      "type": "string",
+      "required": true
+    },
+    "arrival": {
+      "type": "string",
+      "required": true
+    },
+    "cancelled": {
+      "type": "boolean"
+    },
+    "lastStop": {
+      "type": "string"
+    },
+    "late": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

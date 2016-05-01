@@ -24,5 +24,9 @@
   "Forecast": {
     "dataSource": "forecast",
     "public": true
+  },
+  "Train": {
+    "dataSource": "liveTrains",
+    "public": true
   }
 }

@@ -7,31 +7,74 @@
   "forecast": {
     "name": "forecast",
     "connector": "rest",
-    "operations": [{
-      "template": {
-        "method": "GET",
-        "url": "http://api.openweathermap.org/data/2.5/forecast",
-        "headers": {
-          "accepts": "application/json",
-          "content-type": "application/json"
+    "operations": [
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://api.openweathermap.org/data/2.5/forecast",
+          "headers": {
+            "accepts": "application/json",
+            "content-type": "application/json"
+          },
+          "query": {
+            "lon": "{lon}",
+            "lat": "{lat}",
+            "APPID": "{token}",
+            "format": "{format=json}",
+            "units": "{units=metric}"
+          },
+          "responsePath": "$.list[*]"
         },
-        "query": {
-          "lon": "{lon}",
-          "lat": "{lat}",
-          "APPID": "{token}",
-          "format": "{format=json}",
-          "units": "{units=metric}"
-        },
-        "responsePath": "$.list[*]"
-      },
-      "functions": {
-        "find": ["lat", "lon", "token"]
+        "functions": {
+          "find": [
+            "lat",
+            "lon",
+            "token"
+          ]
+        }
       }
-    }]
+    ]
   },
   "testbed": {
     "url": "http://testbed.fmi.fi/data/area/radar/temperature/TB_%datetime%.png",
     "name": "testbed",
     "connector": "remote"
+  },
+  "liveTrains": {
+    "name": "liveTrains",
+    "connector": "rest",
+    "operations": [
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://rata.digitraffic.fi/api/v1/live-trains",
+          "headers": {
+            "accepts": "application/json",
+            "content-type": "application/json"
+          },
+          "query": {
+            "station": "{station}"
+          }
+        },
+        "functions": {
+          "findTrains": [
+            "station"
+          ]
+        }
+      },
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://rata.digitraffic.fi/api/v1/metadata/stations",
+          "headers": {
+            "accepts": "application/json",
+            "content-type": "application/json"
+          }
+        },
+        "functions": {
+          "findStations": []
+        }
+      }
+    ]
   }
 }
