@@ -11,6 +11,9 @@
       "type": "string",
       "required": true
     },
+    "track": {
+      "type": "string"
+    },
     "destination": {
       "type": "string",
       "required": true
@@ -19,10 +22,17 @@
       "type": "string",
       "required": true
     },
+    "estimate": {
+      "type": "string",
+      "required": true
+    },
     "cancelled": {
       "type": "boolean"
     },
     "lastStop": {
+      "type": "string"
+    },
+    "lastTime": {
       "type": "string"
     },
     "late": {

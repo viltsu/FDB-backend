@@ -50,6 +50,7 @@ module.exports = function(Train) {
               train.arrival = timeRow.scheduledTime;
               train.estimate = timeRow.liveEstimateTime;
               train.late = timeRow.differenceInMinutes || 0;
+              train.track = timeRow.commercialTrack;
             }
             if (shouldFindDest) {
               if (timeRow.stationShortCode === 'LEN') {
