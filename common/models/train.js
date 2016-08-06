@@ -1,17 +1,17 @@
-var NodeCache = require( "node-cache" );
+const NodeCache = require( "node-cache" );
 
 module.exports = function(Train) {
 
-  var cache = new NodeCache({stdTTL: 36000, errorOnMissing: true});
+  const cache = new NodeCache({stdTTL: 36000, errorOnMissing: true});
 
   var stations = function(cb) {
     try{
-      var stations = cache.get('train-stations', true );
+      let stations = cache.get('train-stations', true );
       cb(stations);
     } catch( err ){
       Train.findStations(function(err, data) {
         if (err) return {};
-        var stations = {};
+        let stations = {};
         data.forEach(function(elem) {
           stations[elem.stationShortCode] = elem.stationName;
         });
@@ -21,18 +21,19 @@ module.exports = function(Train) {
     }
   };
 
-  Train.findCurrent = function(station, cb) {
+  Train.findCurrent = function(station, limit, cb) {
     stations(function(stations) {
-      Train.findTrains(station, function(err, data) {
+      Train.findTrains(station, limit, function(err, data) {
         if (err) return cb(err);
-        var results = [];
+        let results = [];
         data.forEach(function(elem) {
-          var train = {};
+          let train = {};
+          train.trainNumber = elem.trainNumber;
           train.line = elem.commuterLineID;
           train.cancelled = elem.cancelled;
           train.late = 0;
-          var shouldAdd = true;
-          var shouldFindDest = false;
+          let shouldAdd = true;
+          let shouldFindDest = false;
           elem.timeTableRows.forEach(function(timeRow) {
             if (timeRow.type == 'DEPARTURE') {
               return;
@@ -71,7 +72,32 @@ module.exports = function(Train) {
     });
   };
 
-
+  Train.findStation = function(search, cb) {
+    stations( stations => {
+      var result = [], i;
+      for(i in stations) {
+        if (!stations.hasOwnProperty(i)) {
+          continue;
+        }
+        result.push({
+          'stationName': i,
+          'stationShortCode': stations[i],
+        })
+      }
+      if (search) {
+        search = search.toLowerCase();
+        result = result.filter((station) => {
+          return station['stationName']
+              .toLowerCase()
+              .indexOf(search) !== -1 ||
+            station['stationShortCode']
+              .toLowerCase()
+              .indexOf(search) !== -1
+        })
+      }
+      cb(null, result)
+    });
+  };
 
   Train.remoteMethod(
     'findCurrent',
@@ -79,9 +105,26 @@ module.exports = function(Train) {
       description: 'Return current trains arriving to the stop',
       http: {path: '/',verb: 'get'},
       accepts: [
-        {arg: 'station', type: 'string', required: true}
+        {arg: 'station', type: 'string', required: true},
+        {arg: 'limit', type: 'string'}
       ],
-      returns: {type: 'Train', root: true}
+      returns: {type: ['Train'], root: true}
     }
   );
+
+  Train.remoteMethod(
+    'findStation',
+    {
+      description: 'Return list of stations',
+      http: {path: '/station',verb: 'get'},
+      accepts: [
+        {arg: 'search', type: 'string'}
+      ],
+      returns: {type: ['TrainStation'], root: true}
+    }
+  );
+
+  Train.disableRemoteMethod("findStations", true);
+  Train.disableRemoteMethod("findTrains", true);
+  Train.disableRemoteMethod("invoke", true);
 };

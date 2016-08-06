@@ -28,5 +28,17 @@
   "Train": {
     "dataSource": "liveTrains",
     "public": true
+  },
+  "School": {
+    "dataSource": "infoLite",
+    "public": true
+  },
+  "Child": {
+    "dataSource": "infoLite",
+    "public": true
+  },
+  "TrainStation": {
+    "dataSource": null,
+    "public": false
   }
 }

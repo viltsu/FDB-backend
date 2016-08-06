@@ -7,6 +7,11 @@
     "validateUpsert": true
   },
   "properties": {
+    "trainNumber": {
+      "id": true,
+      "type": "number",
+      "required": true
+    },
     "line": {
       "type": "string",
       "required": true

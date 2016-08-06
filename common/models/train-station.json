@@ -1,17 +1,19 @@
 {
-  "name": "RainMap",
+  "name": "TrainStation",
   "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "image": {
-      "id": true,
-      "type": "string"
+    "stationName": {
+      "type": "string",
+      "required": true
     },
-    "time": {
-      "type": "string"
+    "stationShortCode": {
+      "type": "string",
+      "required": true,
+      "id": true
     }
   },
   "validations": [],

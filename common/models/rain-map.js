@@ -66,7 +66,7 @@ module.exports = function(RainMap) {
     {
       description: 'fetch rain maps',
       http: {path: '/',verb: 'get'},
-      returns: {type: 'RainMap', root: true}
+      returns: {type:  ['RainMap'], root: true}
     }
   );
 

@@ -1,0 +1,27 @@
+{
+  "name": "Child",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Full name"
+    },
+    "img": {
+      "type": "string",
+      "description": "img source"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

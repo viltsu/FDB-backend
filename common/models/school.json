@@ -1,0 +1,44 @@
+{
+  "name": "School",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "hidden": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "type": "number",
+      "id": true
+    },
+    "childId": {
+      "type": "number",
+      "required": true
+    },
+    "day": {
+      "type": "string",
+      "required": true,
+      "description": "Either full date (ex. '2016-01-20') if exception of just a week day if schedule change (ex 1 for monday 2 tuesday etc)"
+    },
+    "start": {
+      "type": "string",
+      "required": true,
+      "description": "time when the school starts ex. 9:45"
+    },
+    "end": {
+      "type": "string",
+      "required": true,
+      "description": "time when the school starts ex. 13:15"
+    },
+    "info": {
+      "type": "string",
+      "description": "special notice for the kid"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

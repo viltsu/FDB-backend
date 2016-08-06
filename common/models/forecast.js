@@ -10,8 +10,7 @@ module.exports = function(Forecast) {
       description: 'fetch forecast',
       accepts: [
         {arg: 'lat', type: 'number', required: true},
-        {arg: 'lon', type: 'number', required: true},
-        {arg: 'token', type: 'string', required: true}
+        {arg: 'lon', type: 'number', required: true}
       ],
       http: {path: '/',verb: 'get'},
       returns: {type: 'Forecast', root: true}
