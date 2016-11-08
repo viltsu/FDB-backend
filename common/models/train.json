@@ -16,6 +16,10 @@
       "type": "string",
       "required": true
     },
+    "destinationLine": {
+      "type": "string",
+      "required": true
+    },
     "track": {
       "type": "string"
     },

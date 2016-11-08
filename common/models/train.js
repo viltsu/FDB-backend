@@ -21,7 +21,7 @@ module.exports = function(Train) {
     }
   };
 
-  Train.findCurrent = function(station, limit, cb) {
+  Train.findCurrent = function(station, destinationStation, limit, cb) {
     stations(function(stations) {
       Train.findTrains(station, limit, function(err, data) {
         if (err) return cb(err);
@@ -32,7 +32,8 @@ module.exports = function(Train) {
           train.line = elem.commuterLineID;
           train.cancelled = elem.cancelled;
           train.late = 0;
-          let shouldAdd = true;
+          let shouldAdd = destinationStation ? false : true;
+          let destination = (destinationStation || 'LEN');
           let shouldFindDest = false;
           elem.timeTableRows.forEach(function(timeRow) {
             if (timeRow.type == 'DEPARTURE') {
@@ -54,10 +55,12 @@ module.exports = function(Train) {
               train.track = timeRow.commercialTrack;
             }
             if (shouldFindDest) {
-              if (timeRow.stationShortCode === 'LEN') {
+              if (timeRow.stationShortCode === destination) {
+                shouldAdd = true;
                 shouldFindDest = false;
               }
               train.destination = stations[timeRow.stationShortCode] || 'unknown';
+              train.destinationLine = timeRow.commercialTrack;
             }
           });
           if (shouldAdd) {
@@ -106,6 +109,7 @@ module.exports = function(Train) {
       http: {path: '/',verb: 'get'},
       accepts: [
         {arg: 'station', type: 'string', required: true},
+        {arg: 'destinationStation', type: 'string'},
         {arg: 'limit', type: 'string'}
       ],
       returns: {type: ['Train'], root: true}
