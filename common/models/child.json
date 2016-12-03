@@ -7,17 +7,25 @@
   },
   "properties": {
     "id": {
-      "type": "number",
-      "required": true
+      "type": "Number",
+      "required": true,
+      "precision": 16,
+      "scale": null
     },
     "name": {
-      "type": "string",
+      "type": "String",
       "required": true,
-      "description": "Full name"
+      "description": "Full name",
+      "length": 64,
+      "precision": null,
+      "scale": null
     },
     "img": {
-      "type": "string",
-      "description": "img source"
+      "type": "String",
+      "description": "img source",
+      "length": 64,
+      "precision": null,
+      "scale": null
     }
   },
   "validations": [],

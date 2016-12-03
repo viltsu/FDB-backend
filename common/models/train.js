@@ -128,7 +128,7 @@ module.exports = function(Train) {
     }
   );
 
-  Train.disableRemoteMethod("findStations", true);
-  Train.disableRemoteMethod("findTrains", true);
-  Train.disableRemoteMethod("invoke", true);
+  Train.disableRemoteMethodByName("findStations", true);
+  Train.disableRemoteMethodByName("findTrains", true);
+  Train.disableRemoteMethodByName("invoke", true);
 };

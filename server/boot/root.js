@@ -8,8 +8,7 @@ module.exports = function(server) {
   server.use(function (req, res, next) {
     if (path.extname(req.path).length > 0 || req.path.startsWith('/api')) {
       next();
-    }
-    else {
+    } else {
       req.url = '/index.html';
       next();
     }

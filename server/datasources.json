@@ -1,8 +1,8 @@
 {
   "infoLite": {
     "name": "infoLite",
-    "connector": "sqlite",
-    "file_name": "./info.db"
+    "connector": "sqlite3",
+    "file": "./info.db"
   },
   "forecast": {
     "name": "forecast",
