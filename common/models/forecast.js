@@ -1,8 +1,6 @@
-var NodeCache = require( "node-cache" );
+const NodeCache = require( "node-cache" );
 
 module.exports = function(Forecast) {
-
-
 
   Forecast.remoteMethod(
     'find',

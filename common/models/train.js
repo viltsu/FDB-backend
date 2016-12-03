@@ -4,7 +4,7 @@ module.exports = function(Train) {
 
   const cache = new NodeCache({stdTTL: 36000, errorOnMissing: true});
 
-  var stations = function(cb) {
+  const stations = function(cb) {
     try{
       let stations = cache.get('train-stations', true );
       cb(stations);
@@ -32,7 +32,7 @@ module.exports = function(Train) {
           train.line = elem.commuterLineID;
           train.cancelled = elem.cancelled;
           train.late = 0;
-          let shouldAdd = destinationStation ? false : true;
+          let shouldAdd = !destinationStation;
           let destination = (destinationStation || 'LEN');
           let shouldFindDest = false;
           elem.timeTableRows.forEach(function(timeRow) {
@@ -77,7 +77,7 @@ module.exports = function(Train) {
 
   Train.findStation = function(search, cb) {
     stations( stations => {
-      var result = [], i;
+      let result = [], i;
       for(i in stations) {
         if (!stations.hasOwnProperty(i)) {
           continue;

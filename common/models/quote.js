@@ -6,7 +6,7 @@ module.exports = function(Quote) {
         cb(err, {});
         return;
       }
-      var spot = Math.floor(Math.random() * count);
+      const spot = Math.floor(Math.random() * count);
       Quote.findOne({offset: spot}, function(err, model) {
         cb(err, model);
       });

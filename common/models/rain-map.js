@@ -1,6 +1,6 @@
-var request = require('request');
-var moment = require('moment');
-var NodeCache = require( "node-cache" );
+const request = require('request');
+const moment = require('moment');
+const NodeCache = require( "node-cache" );
 
 module.exports = function(RainMap) {
 
@@ -8,7 +8,7 @@ module.exports = function(RainMap) {
   const RESULT_SIZE = 10;
   const MAP_URL = 'http://testbed.fmi.fi/data/area/radar/temperature/TB_%datatime%.png';
 
-  var cache = new NodeCache({stdTTL: 3600, errorOnMissing: true});
+  const cache = new NodeCache({stdTTL: 3600, errorOnMissing: true});
 
   RainMap.fetchImages = function fetchImages(cb, parameters) {
     parameters = parameters || {};
@@ -25,18 +25,18 @@ module.exports = function(RainMap) {
       cb(null, parameters.data);
       return;
     }
-    var utc = moment(parameters.time).utc();
-    var url = MAP_URL.replace('%datatime%',utc.format('YYYYMMDDHHmm'));
+    let utc = moment(parameters.time).utc();
+    let url = MAP_URL.replace('%datatime%',utc.format('YYYYMMDDHHmm'));
 
     try{
-      var model = cache.get(url, true );
+      let model = cache.get(url, true );
       parameters.data.push(model);
       parameters.success++;
       RainMap.fetchImages(cb, parameters)
     } catch( err ){
       request(url, function(error, res, body) {
         if (!error && res.statusCode === 200) {
-          var model = {
+          let model = {
             image: url,
             time: parameters.time.format('HH:mm')
           };
@@ -52,11 +52,11 @@ module.exports = function(RainMap) {
   }
 
   function getStartTime() {
-    var min = parseInt(moment().format('mm'));
+    let min = parseInt(moment().format('mm'));
     if (min % 5 !== 0) {
       min -= min % 5;
     }
-    var start = moment().minute(min);
+    let start = moment().minute(min);
 
     return moment(start);
   }
