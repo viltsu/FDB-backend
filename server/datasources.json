@@ -6,7 +6,22 @@
   },
   "forecast": {
     "name": "forecast",
-    "connector": "rest"
+    "connector": "rest",
+    "operations": [
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://data.fmi.fi/",
+          "headers": {
+            "accepts": "application/xml",
+            "content-type": "application/xml"
+          }
+        },
+        "functions": {
+          "find": []
+        }
+      }
+    ]
   },
   "testbed": {
     "url": "http://testbed.fmi.fi/data/area/radar/temperature/TB_%datetime%.png",

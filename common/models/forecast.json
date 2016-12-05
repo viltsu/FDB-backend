@@ -11,9 +11,59 @@
       "type": "string",
       "required": true
     },
-    "forecast": {
-      "type": "string",
-      "required": true
+    "GeopHeight": {
+      "type": "string"
+    },
+    "Temperature": {
+      "type": "string"
+    },
+    "Pressure": {
+      "type": "string"
+    },
+    "Humidity": {
+      "type": "string"
+    },
+    "WindDirection": {
+      "type": "string"
+    },
+    "WindSpeedMS": {
+      "type": "string"
+    },
+    "WindUMS": {
+      "type": "string"
+    },
+    "WindVMS": {
+      "type": "string"
+    },
+    "MaximumWind": {
+      "type": "string"
+    },
+    "WindGust": {
+      "type": "string"
+    },
+    "DewPoint": {
+      "type": "string"
+    },
+    "TotalCloudCover": {
+      "type": "string"
+    },
+    "WeatherSymbol3": {
+      "type": "string"
+    },
+    "LowCloudCover": {
+      "type": "string"
+    },
+    "MediumCloudCover": {
+      "type": "string"
+    },
+    "HighCloudCover": {
+      "type": "string"
+    },
+    "Precipitation1h": {
+      "type": "string"
+    },
+    "PrecipitationAmount": {
+      "type": "string"
     }
   },
   "validations": [],
