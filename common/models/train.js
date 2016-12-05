@@ -23,31 +23,38 @@ module.exports = function(Train) {
 
   Train.findCurrent = function(station, destinationStation, limit, cb) {
     stations(function(stations) {
-      Train.findTrains(station, limit, function(err, data) {
+      Train.findTrains(station, limit * 10, function(err, data) {
         if (err) return cb(err);
         let results = [];
+        let done = false;
         data.forEach(function(elem) {
           let train = {};
           train.trainNumber = elem.trainNumber;
-          train.line = elem.commuterLineID;
+          train.train = elem.commuterLineID;
           train.cancelled = elem.cancelled;
           train.late = 0;
+          if (!train.train || done) {
+            return;
+          }
           let shouldAdd = !destinationStation;
           let destination = (destinationStation || 'LEN');
           let shouldFindDest = false;
           elem.timeTableRows.forEach(function(timeRow) {
-            if (timeRow.type == 'DEPARTURE') {
+            if ((timeRow.type === 'DEPARTURE' && shouldFindDest) ||
+                (timeRow.type === 'ARRIVAL'   && !shouldFindDest) || shouldAdd) {
               return;
             }
             if (typeof timeRow.actualTime !== 'undefined') {
               train.lastStop = stations[timeRow.stationShortCode] || timeRow.stationShortCode;
               train.lastTime = timeRow.actualTime;
             }
-            if (timeRow.stationShortCode === station) {
+            if (timeRow.stationShortCode === station && timeRow.commercialTrack) {
               shouldFindDest = true;
               if (typeof timeRow.actualTime !== 'undefined') {
                 shouldAdd = false;
+                shouldFindDest = false;
               }
+              train.line = timeRow.commercialTrack;
               train.actual = timeRow.actualTime;
               train.arrival = timeRow.scheduledTime;
               train.estimate = timeRow.liveEstimateTime;
@@ -55,16 +62,23 @@ module.exports = function(Train) {
               train.track = timeRow.commercialTrack;
             }
             if (shouldFindDest) {
-              if (timeRow.stationShortCode === destination) {
+              if (timeRow.stationShortCode === destination && timeRow.commercialTrack) {
                 shouldAdd = true;
+                shouldFindDest = false;
+              } else if (timeRow.stationShortCode === 'LEN' && station !== 'LEN') {
+                shouldAdd = false;
                 shouldFindDest = false;
               }
               train.destination = stations[timeRow.stationShortCode] || 'unknown';
               train.destinationLine = timeRow.commercialTrack;
+              train.destinationArrival = timeRow.liveEstimateTime || timeRow.scheduledTime;
             }
           });
           if (shouldAdd) {
             results.push(train);
+            if (results.length >= limit) {
+              done = true;
+            }
           }
         });
         results.sort(function(a,b) {
