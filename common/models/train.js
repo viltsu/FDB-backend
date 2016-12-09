@@ -23,17 +23,16 @@ module.exports = function(Train) {
 
   Train.findCurrent = function(station, destinationStation, limit, cb) {
     stations(function(stations) {
-      Train.findTrains(station, limit * 10, function(err, data) {
+      Train.findTrains(station, (+limit + 30), function(err, data) {
         if (err) return cb(err);
         let results = [];
-        let done = false;
         data.forEach(function(elem) {
           let train = {};
           train.trainNumber = elem.trainNumber;
           train.train = elem.commuterLineID;
           train.cancelled = elem.cancelled;
           train.late = 0;
-          if (!train.train || done) {
+          if (!train.train) {
             return;
           }
           let shouldAdd = !destinationStation;
@@ -76,15 +75,12 @@ module.exports = function(Train) {
           });
           if (shouldAdd) {
             results.push(train);
-            if (results.length >= limit) {
-              done = true;
-            }
           }
         });
         results.sort(function(a,b) {
           return new Date(a.arrival) - new Date(b.arrival);
         });
-        cb(null, results);
+        cb(null, results.slice(0, limit));
       });
     });
   };
